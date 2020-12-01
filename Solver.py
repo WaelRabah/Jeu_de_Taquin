@@ -258,7 +258,7 @@ class AStar :
         self.initial.f=self.initial.g+self.initial.h
         open=[self.initial]
         if (self.heuristic(self.initial,self.goal)==0) :
-            return
+            return self.goal.puzzle
         while len(open) > 0  :
             current=None
 
@@ -271,7 +271,7 @@ class AStar :
             if self.heuristic(current,self.goal)==0 :
                 path= list(current.path)
                 self.aff5(path)
-                return
+                return self.goal.puzzle
             open.remove(current)
             close.append(current)
             open=self.generate_children(current,close,open)

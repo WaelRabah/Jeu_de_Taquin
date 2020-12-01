@@ -42,11 +42,11 @@ a_star=AStar(fenetre,puzzl,Node(puzzl),Node(goal),int(t),0)
 def Astar_solve_manhattan():
 	global a_star , puzzl
 	a_star=AStar(fenetre,puzzl,Node(puzzl),Node(goal),int(t),1)
-	a_star.solve()
+	puzzl=a_star.solve()
 def Astar_solve_misplaced():
 	global a_star , puzzl
 	a_star=AStar(fenetre,puzzl,Node(puzzl),Node(goal),int(t),0)
-	a_star.solve()
+	puzzl=a_star.solve()
 
 def solv():
 	global s
@@ -85,10 +85,7 @@ Button(text='RESO2',command=solv).pack(side=LEFT)
 Button(text='A* : h1',command=Astar_solve_manhattan).pack(side=LEFT)
 Button(text='A* : h2',command=Astar_solve_misplaced).pack(side=LEFT)
 
-bouton1 = Radiobutton(fenetre, text="3*3", variable=t, value=3)
-bouton2 = Radiobutton(fenetre, text="4*4", variable=t, value=4)
-bouton1.pack()
-bouton2.pack()
+
 
 
 for k in range(len(Lph)) :
