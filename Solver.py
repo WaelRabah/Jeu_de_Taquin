@@ -6,7 +6,6 @@ from tkinter import *
 import numpy as np
 from queue import Queue
 class Node:
-
     def __init__(self, puzzle, parent=None, action=None):
         self.puzzle = puzzle
         self.parent = parent
@@ -26,7 +25,6 @@ class Node:
             p.append(node)
             node = node.parent
         yield from reversed(p)
-
     @property
     def solved(self):
         return self.puzzle.solved
@@ -221,7 +219,7 @@ class AStar :
             distances.append(d0+d1)
         return np.sum(distances)
 
-    def generate_children(self,current,close,open):
+    def generate_children(self,current,closed,open):
         children=[
             (0, 1),
             (0, -1),
@@ -236,7 +234,7 @@ class AStar :
                 if r<self.size and c<self.size and r >=0 and c>=0 and current.puzzle.board[i][j]==0 :
                     node =Node(current.puzzle.copy())
                     node.puzzle.board[i][j], node.puzzle.board[r][c] = node.puzzle.board[r][c], node.puzzle.board[i][j]
-                    if node.isInList(close):
+                    if node.isInList(closed):
                         del node
                         continue
                     if node.isInList(open):
@@ -251,7 +249,7 @@ class AStar :
         return open
     def solve(self):
         current=None
-        close=[]
+        closed=[]
         path=[]
         self.initial.g=0
         self.initial.h=self.heuristic(self.initial,self.goal)
@@ -273,8 +271,8 @@ class AStar :
                 self.aff5(path)
                 return self.goal.puzzle
             open.remove(current)
-            close.append(current)
-            open=self.generate_children(current,close,open)
+            closed.append(current)
+            open=self.generate_children(current,closed,open)
     def aff5(self , p , i=1):
         node = p[0]
         p=p[1:]
